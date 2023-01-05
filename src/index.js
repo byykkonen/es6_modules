@@ -1,9 +1,5 @@
 import Wishlist from "./wishlist";
 
-console.log("Hello World");
-
-let wishlist = new Wishlist();
-
 //select the form
 let form = document.querySelector("#submitForm");
 //select the input for the car
@@ -23,6 +19,8 @@ let removeBtn = document.querySelector("#removeBtn");
 //select the wishlist unordered list element
 let listUL = document.querySelector("#wishListContainer > ul");
 
+let wishlist = new Wishlist();
+
 //Event Listeners
 form.addEventListener("submit", addCar);
 
@@ -30,48 +28,48 @@ removeBtn.addEventListener("click", removeCar);
 
 //Functions
 
-function showCarDetailes(car) {
-    //update car display texts
-    makeDisplay.textContent = car.make;
-    modelDisplay.textContent = car.model;
-    yearDisplay.textContent = car.year;
-    //enable the remove button
-    removeBtn.disabled = false;
-    //set the current car's id to the data-carId attribute of removeBtn
-    removeBtn.setAttribute("data-carId", car.id);
-}
-
 function updateDOMlist() {
     //clear the ul contents
-    listUL.innerHTML = "";
+    wishlistUl.innerHTML = "";
 
     //iterate through the list of cars
     wishlist.list.forEach((car) => {
         //add a li to the ul for each car
-        let li = document.createElement("li")
-        li.textContent = car.model;
+        const li = document.createElement("li");
+        li.textContent = `${car.make} ${car.model}`;
         // add a click event listener to showCarDetails per list item click
-        li.addEventListener("click", () => showCarDetailes(car));
-        listUL.appendChild(li);
+        li.addEventListener("click", () => showCarDetails(car));
+        wishlistUL.appendChild(li);
     });
 }
 
-function addCar(event) {
-    event.preventDefault();
+    function showCarDetails(car) {
+        //update car display texts
+        makeDisplay.textContent = car.make;
+        modelDisplay.textContent = car.model;
+        yearDisplay.textContent = car.year;
+        //enable the remove button
+        removeBtn.disabled = false;
+        //set the current car's id to the data-carId attribute of removeBtn
+        removeBtn.setAttribute("data-carId", car.id);
+    }
 
-    let make = makeInput.value;
-    let model = modelInput.value;
-    let year = yearInput.value;
+    function addCar(event) {
+        event.preventDefault();
 
-    wishlist.add(make, model, year);
+        let make = makeInput.value;
+        let model = modelInput.value;
+        let year = yearInput.value;
 
-    updateDOMlist();
+        wishlist.add(make, model, year);
 
-    //reset form values
-    makeInput.value = "";
-    modelInput = "";
-    yearInput = "";
-}
+        updateDOMlist();
+
+        //reset form values
+        makeInput.value = "";
+        modelInput = "";
+        yearInput = "";
+    }
 
 function removeCar() {
     //get the displayed car's id
@@ -90,4 +88,4 @@ function removeCar() {
 
     //disable remove button
     removeBtn.disabled = true;
-};
+}

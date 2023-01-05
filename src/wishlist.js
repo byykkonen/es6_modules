@@ -1,10 +1,10 @@
 import Car from "./car";
 
-export default class Wishlist {
-    //two class properties
-    list = [];
-    nextId = 0;
-
+class WishList {
+    constructor() {
+      this.list = [];
+      this.nextId = 0;
+    }
 
     //two methods
     add(make, model, year){
@@ -17,9 +17,7 @@ export default class Wishlist {
         //find the car in the wishlist list that matches the remove id
         let index = this.list.findIndex((car) => car.id == carId);
         //remove it and update wishlist list
-        this.list.splice(index, 1);
-        //or with filter
-        //this.list = this.list.filter((car) => car.id != carId);
+        this.list = this.list.filter((car) => car.id != carId);
     }
     
 };
